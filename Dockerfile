@@ -1,5 +1,5 @@
 # Dockerfile for ELK stack
-# Elasticsearch, Logstash, Kibana 7.3.0
+# Elasticsearch, Logstash, Kibana 7.3.2
 
 # Build with:
 # docker build -t <repo-user>/elk .
@@ -173,7 +173,7 @@ ADD ./kibana.yml ${KIBANA_HOME}/config/kibana.yml
 ADD ./start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
-EXPOSE 5601 9200 9300 4560
+EXPOSE 5601 9200 9300 5000 5010
 VOLUME /var/lib/elasticsearch
 
 CMD [ "/usr/local/bin/start.sh" ]
