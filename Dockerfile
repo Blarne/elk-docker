@@ -144,8 +144,8 @@ ADD pipelines.yml ${LOGSTASH_PATH_SETTINGS}/pipelines.yml
 ADD ./logstash-conf/*.conf ${LOGSTASH_PATH_CONF}/conf.d/
 
 # patterns
-ADD ./nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
-RUN chown -R logstash:logstash ${LOGSTASH_HOME}/patterns
+# ADD ./nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
+# RUN chown -R logstash:logstash ${LOGSTASH_HOME}/patterns
 
 # Fix permissions
 RUN chmod -R +r ${LOGSTASH_PATH_CONF} ${LOGSTASH_PATH_SETTINGS} \
