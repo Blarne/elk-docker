@@ -170,7 +170,8 @@ ADD ./kibana.yml ${KIBANA_HOME}/config/kibana.yml
 #                                   START
 ###############################################################################
 
-RUN sysctl -w vm.max_map_count=262144
+RUN echo 262144 > /proc/sys/vm/max_map_count
+RUN echo vm.max_map_count=262144 >> /etc/sysctl.conf
 
 ADD ./start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
