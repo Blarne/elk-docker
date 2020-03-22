@@ -1,5 +1,5 @@
 # Dockerfile for ELK stack
-# Elasticsearch, Logstash, Kibana 7.3.2
+# Elasticsearch, Logstash, Kibana 7.6.1, Open JDK 11
 
 # Build with:
 # docker build -t <repo-user>/elk .
@@ -8,9 +8,8 @@
 # docker run -p 5601:5601 -p 9200:9200 -p 4560:4560 -it --name elk <repo-user>/elk
 
 FROM phusion/baseimage:0.11
-MAINTAINER Sebastien Pujadas http://pujadas.net
-ENV \
- REFRESHED_AT=2017-02-28
+MAINTAINER Miroslav Svoboda http://www.karumien.com
+ENV REFRESHED_AT=2017-02-28
 
 
 ###############################################################################
