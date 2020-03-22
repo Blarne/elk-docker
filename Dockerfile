@@ -176,6 +176,9 @@ RUN echo vm.max_map_count=262144 >> /etc/sysctl.d/99-sysctl.conf
 ADD ./start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
+ADD ./status.sh /usr/local/bin/status.sh
+RUN chmod +x /usr/local/bin/status.sh
+
 EXPOSE 5601 9200 9300 5000 5010
 VOLUME /var/lib/elasticsearch
 
