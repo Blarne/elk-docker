@@ -21,7 +21,7 @@ ENV \
 
 RUN set -x \
  && apt update -qq \
- && apt install -qqy --no-install-recommends ca-certificates curl gosu tzdata openjdk-8-jdk \
+ && apt install -qqy --no-install-recommends ca-certificates curl gosu tzdata openjdk-11-jdk \
  && apt clean \
  && rm -rf /var/lib/apt/lists/* \
  && gosu nobody true \
@@ -37,7 +37,7 @@ ENV \
 
 # note you can't define an env var that references another one in the same block (docker layer)
 ENV \
- JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre \
+ JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/jre \
  ES_PACKAGE=elasticsearch-${ES_VERSION}-linux-x86_64.tar.gz \
  ES_GID=991 \
  ES_UID=991 \
@@ -54,8 +54,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
  && groupadd -r elasticsearch -g ${ES_GID} \
  && useradd -r -s /usr/sbin/nologin -M -c "Elasticsearch service user" -u ${ES_UID} -g elasticsearch elasticsearch \
  && mkdir -p /var/log/elasticsearch ${ES_PATH_CONF} ${ES_PATH_CONF}/scripts /var/lib/elasticsearch ${ES_PATH_BACKUP} \
- && chown -R elasticsearch:elasticsearch ${ES_HOME} /var/log/elasticsearch /var/lib/elasticsearch ${ES_PATH_CONF} ${ES_PATH_BACKUP}
-
+ && chown -R elasticsearch:elasticsearch ${ES_HOME} /var/log/elasticsearch /var/lib/elasticsearch ${ES_PATH_CONF} ${ES_PATH_BACKUP} 
 
 ### install Logstash
 
@@ -172,6 +171,8 @@ ADD ./kibana.yml ${KIBANA_HOME}/config/kibana.yml
 
 # RUN echo 262144 > /proc/sys/vm/max_map_count
 # RUN echo vm.max_map_count=262144 >> /etc/sysctl.conf
+RUN sysctl -w vm.max_map_count=262144
+
 
 ADD ./start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
