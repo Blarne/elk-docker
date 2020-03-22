@@ -20,7 +20,7 @@ ENV REFRESHED_AT=2017-02-28
 
 RUN set -x \
  && apt update -qq \
- && apt install -qqy --no-install-recommends ca-certificates curl gosu tzdata openjdk-11-jdk \
+ && apt install -qqy --no-install-recommends ca-certificates curl gosu tzdata openjdk-8-jdk openjdk-11-jdk \
  && apt clean \
  && rm -rf /var/lib/apt/lists/* \
  && gosu nobody true \
@@ -36,7 +36,7 @@ ENV \
 
 # note you can't define an env var that references another one in the same block (docker layer)
 ENV \
- JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/jre \
+ JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre \
  ES_PACKAGE=elasticsearch-${ES_VERSION}-linux-x86_64.tar.gz \
  ES_GID=991 \
  ES_UID=991 \
@@ -168,18 +168,10 @@ ADD ./kibana.yml ${KIBANA_HOME}/config/kibana.yml
 #                                   START
 ###############################################################################
 
-# RUN echo 262144 > /proc/sys/vm/max_map_count
-RUN echo vm.max_map_count=262144 >> /etc/sysctl.d/99-sysctl.conf
-#RUN sysctl -w vm.max_map_count=262144
-
-
 ADD ./start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
-
-ADD ./status.sh /usr/local/bin/status.sh
-RUN chmod +x /usr/local/bin/status.sh
 
 EXPOSE 5601 9200 9300 5000 5010
 VOLUME /var/lib/elasticsearch
 
-CMD [ "/usr/local/bin/status.sh" ]
+CMD [ "/usr/local/bin/start.sh" ]
